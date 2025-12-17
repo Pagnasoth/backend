@@ -1,0 +1,6 @@
+# Use newer FastAPI that's compatible with pydantic 2
+fastapi>=0.115.0
+uvicorn[standard]==0.22.0
+python-dotenv==1.0.0
+requests==2.31.0
+pydantic>=2.0.0
