@@ -4,7 +4,10 @@ from pydantic import BaseModel
 from typing import Optional
 import os
 import requests
+import time
+import random
 from dotenv import load_dotenv
+from requests import HTTPError
 
 load_dotenv()
 
@@ -15,7 +18,9 @@ OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 
 # Candidate models to try (priority order)
 _GEMINI_CANDIDATE_MODELS = [
-    'gemini-2.5-flash'
+    'gemini-2.0-flash',
+    'gemini-1.5-pro',
+    'gemini-1.5-flash'
 ]
 
 
@@ -199,44 +204,96 @@ def get_models():
 
 
 def call_gemini_google(prompt: str):
-    """Call Google Gemini using the google.genai Python client (single attempt) following the recommended client pattern."""
-    try:
-        from google import genai
-    except Exception as e:
-        _gemini_log(f"EXCEPTION importing google.genai: {e}")
-        raise RuntimeError("google.genai not available; install google-genai") from e
+    # For Google generative language, the recommended pattern is an authenticated HTTP POST.
+    # GEMINI_API_URL should be like: https://generativelanguage.googleapis.com/v1beta/models/YOUR_MODEL:generateContent
+    # We append the API key as a query param to avoid complex OAuth flows in this example.
+    params = {'key': GEMINI_API_KEY}
+    body = {
+        'contents': [
+            {
+                'parts': [{'text': prompt}]
+            }
+        ]
+    }
+    max_retries = 3
+    backoff_base = 1.0
+    last_exception = None
 
-    # Instantiate client (pass api_key if available)
-    try:
-        client = genai.Client(api_key=GEMINI_API_KEY) if GEMINI_API_KEY else genai.Client()
-    except TypeError:
-        # Older/newer versions may not accept api_key kwarg - fallback
-        client = genai.Client()
-
-    model = 'gemini-2.5-flash'
-    _gemini_log(f"REQUEST to genai model={model} prompt_length={len(prompt)}")
-
-    try:
-        # Use the recommended pattern: client.models.generate_content
-        response = client.models.generate_content(model=model, contents=prompt)
-        _gemini_log(f"RESPONSE from genai: {response}")
-
-        # Common response shapes: check for 'output_text', 'text', or structured 'output'
-        text = getattr(response, 'output_text', None) or getattr(response, 'text', None)
-        if text:
-            return text
-        if hasattr(response, 'output') and response.output:
+    for attempt in range(0, max_retries + 1):
+        try:
+            _gemini_log(f"REQUEST to {GEMINI_API_URL} params={dict(params)} body={body} attempt={attempt}")
+            resp = requests.post(GEMINI_API_URL, params=params, json=body, timeout=30)
             try:
-                # Some clients return output items with a 'content' field
-                return response.output[0].content
+                resp_text = resp.text
             except Exception:
-                return str(response)
-        # Fallback
-        return str(response)
+                resp_text = '<unreadable response body>'
+            _gemini_log(f"RESPONSE status={resp.status_code} text={resp_text}")
 
+            # If we hit a rate limit or server error, retry with backoff
+            if resp.status_code == 429 or resp.status_code >= 500:
+                last_exception = requests.HTTPError(f"{resp.status_code} Server Error")
+                if attempt < max_retries:
+                    sleep_for = backoff_base * (2 ** attempt) + random.random()
+                    sleep_for = min(sleep_for, 60)
+                    _gemini_log(f"Retrying after {sleep_for:.2f}s due to status {resp.status_code} (attempt {attempt})")
+                    time.sleep(sleep_for)
+                    continue
+                else:
+                    resp.raise_for_status()
+
+            resp.raise_for_status()
+            j = resp.json()
+            last_exception = None
+            break
+
+        except requests.RequestException as e:
+            last_exception = e
+            _gemini_log(f"EXCEPTION calling Gemini: {str(e)} attempt={attempt}")
+            # If unauthorized or model not found, don't retry
+            code = None
+            try:
+                code = getattr(e, 'response').status_code
+            except Exception:
+                pass
+            if code in (401, 403, 404):
+                raise
+            if attempt < max_retries:
+                sleep_for = backoff_base * (2 ** attempt) + random.random()
+                sleep_for = min(sleep_for, 60)
+                _gemini_log(f"Transient error, sleeping {sleep_for:.2f}s before retry (attempt {attempt})")
+                time.sleep(sleep_for)
+                continue
+            raise
+    # Best-effort extraction
+    candidates = j.get('candidates') if isinstance(j, dict) else None
+    if candidates and isinstance(candidates, list):
+        return candidates[0].get('output') or str(candidates[0])
+    if 'output' in j:
+        return j['output'][0].get('content') if isinstance(j['output'], list) else str(j['output'])
+    return str(j)
+
+
+def call_openai(prompt: str):
+    """Fallback to OpenAI Chat Completions if available."""
+    if not OPENAI_API_KEY:
+        raise RuntimeError('OPENAI_API_KEY not configured')
+    url = 'https://api.openai.com/v1/chat/completions'
+    headers = {'Authorization': f'Bearer {OPENAI_API_KEY}', 'Content-Type': 'application/json'}
+    body = {
+        'model': 'gpt-3.5-turbo',
+        'messages': [{'role': 'user', 'content': prompt}],
+        'max_tokens': 600,
+        'temperature': 0.0
+    }
+    try:
+        _gemini_log(f"REQUEST to OpenAI fallback body={body}")
+        resp = requests.post(url, json=body, headers=headers, timeout=30)
+        _gemini_log(f"OpenAI RESPONSE status={resp.status_code} text={resp.text}")
+        resp.raise_for_status()
+        data = resp.json()
+        return data['choices'][0]['message']['content']
     except Exception as e:
-        print("Exception calling genai generate_content:", e)
-        _gemini_log(f"EXCEPTION calling genai generate_content: {e}")
+        _gemini_log(f"OpenAI fallback error: {e}")
         raise
 
 
@@ -282,22 +339,23 @@ def analyze(req: AnalyzeRequest):
         raise HTTPException(status_code=400, detail='No code provided')
 
     prompt = f"Analyze the following {req.language or 'code'} for security issues and return a concise report:\n\n{req.code}"
-    print(prompt)
 
     # If credentials are provided and URL looks like Google API, call it
-    if GEMINI_API_KEY:
-        print("Catch the fish")
+    if GEMINI_API_KEY and GEMINI_API_URL and 'generativelanguage.googleapis.com' in GEMINI_API_URL:
         try:
             result = call_gemini_google(prompt)
             return {'result': result}
+        except HTTPError as e:
+            status = getattr(getattr(e, 'response', None), 'status_code', None)
+            _gemini_log(f"Top-level HTTPError status={status} err={str(e)}")
+            reason = "Gemini rate limit hit; showing mock analysis" if status == 429 else "Gemini unavailable; showing mock analysis"
+            return {'result': _build_mock_analysis(reason, req)}
         except Exception as e:
             _gemini_log(f"Top-level handler caught exception: {str(e)}")
-            reason = "Gemini rate limit hit; showing mock analysis" if '429' in str(e) else "Gemini unavailable; showing mock analysis"
-            return {'result': _build_mock_analysis(reason, req)}
+            return {'result': _build_mock_analysis("Gemini unavailable; showing mock analysis", req)}
 
     # Generic provider path
     if GEMINI_API_KEY and GEMINI_API_URL and 'generativelanguage.googleapis.com' not in GEMINI_API_URL:
-        print("Catch the other fish")
         try:
             headers = {'Content-Type': 'application/json'}
             headers['Authorization'] = f'Bearer {GEMINI_API_KEY}'
