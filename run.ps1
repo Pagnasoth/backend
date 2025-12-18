@@ -34,4 +34,4 @@ Write-Host "Upgrading pip and installing requirements..."
 & $venvPython -m pip install -r requirements-python.txt
 
 Write-Host "Starting FastAPI (uvicorn) on http://localhost:5174"
-& $venvPython -m uvicorn app:app --reload --port 5174
+& $venvPython -m uvicorn app:app --reload --port 8000

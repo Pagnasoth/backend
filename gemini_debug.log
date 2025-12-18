@@ -37,3 +37,51 @@
   thoughts_token_count=1118,
   total_token_count=1392
 ) automatic_function_calling_history=[] parsed=None
+[2025-12-18T10:08:30.022151Z] REQUEST to genai model=gemini-2.5-flash prompt_length=94
+[2025-12-18T10:08:30.710131Z] EXCEPTION calling genai generate_content: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:08:30.710731Z] Top-level handler caught exception: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:09:42.589814Z] REQUEST to genai model=gemini-2.5-flash prompt_length=94
+[2025-12-18T10:09:43.242043Z] EXCEPTION calling genai generate_content: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:09:43.242530Z] Top-level handler caught exception: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:10:07.584935Z] REQUEST to genai model=gemini-2.5-flash prompt_length=92
+[2025-12-18T10:10:08.206858Z] EXCEPTION calling genai generate_content: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:10:08.207396Z] Top-level handler caught exception: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:14:13.748353Z] REQUEST to genai model=gemini-2.5-flash prompt_length=91
+[2025-12-18T10:14:14.404234Z] EXCEPTION calling genai generate_content: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:14:14.404797Z] Top-level handler caught exception: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:14:20.373371Z] REQUEST to genai model=gemini-2.5-flash prompt_length=91
+[2025-12-18T10:14:20.938473Z] EXCEPTION calling genai generate_content: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:14:20.939042Z] Top-level handler caught exception: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:14:46.505718Z] REQUEST to genai model=gemini-2.5-flash prompt_length=127
+[2025-12-18T10:14:47.064773Z] EXCEPTION calling genai generate_content: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:14:47.065671Z] Top-level handler caught exception: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:14:50.947069Z] REQUEST to genai model=gemini-2.5-flash prompt_length=127
+[2025-12-18T10:14:51.496959Z] EXCEPTION calling genai generate_content: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:14:51.497510Z] Top-level handler caught exception: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:14:55.371600Z] REQUEST to genai model=gemini-2.5-flash prompt_length=127
+[2025-12-18T10:14:55.923262Z] EXCEPTION calling genai generate_content: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:14:55.923736Z] Top-level handler caught exception: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:15:48.575919Z] REQUEST to genai model=gemini-2.5-flash prompt_length=126
+[2025-12-18T10:15:49.214367Z] EXCEPTION calling genai generate_content: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:15:49.214981Z] Top-level handler caught exception: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:16:16.752068Z] REQUEST to genai model=gemini-2.5-flash prompt_length=92
+[2025-12-18T10:16:17.318776Z] EXCEPTION calling genai generate_content: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:16:17.319266Z] Top-level handler caught exception: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:16:20.291497Z] REQUEST to genai model=gemini-2.5-flash prompt_length=92
+[2025-12-18T10:16:20.839732Z] EXCEPTION calling genai generate_content: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:16:20.840259Z] Top-level handler caught exception: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:16:25.125942Z] REQUEST to genai model=gemini-2.5-flash prompt_length=92
+[2025-12-18T10:16:25.665150Z] EXCEPTION calling genai generate_content: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:16:25.665836Z] Top-level handler caught exception: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:18:18.813724Z] REQUEST to genai model=gemini-2.5-flash prompt_length=91
+[2025-12-18T10:18:19.386436Z] EXCEPTION calling genai generate_content: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:18:19.386882Z] Top-level handler caught exception: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:18:23.195058Z] REQUEST to genai model=gemini-2.5-flash prompt_length=91
+[2025-12-18T10:18:23.736401Z] EXCEPTION calling genai generate_content: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:18:23.736944Z] Top-level handler caught exception: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:18:37.845257Z] REQUEST to genai model=gemini-2.5-flash prompt_length=91
+[2025-12-18T10:18:38.438224Z] EXCEPTION calling genai generate_content: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:18:38.438681Z] Top-level handler caught exception: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:22:03.464798Z] REQUEST to genai model=gemini-2.5-flash prompt_length=91
+[2025-12-18T10:22:04.120279Z] EXCEPTION calling genai generate_content: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
+[2025-12-18T10:22:04.121034Z] Top-level handler caught exception: 403 PERMISSION_DENIED. {'error': {'code': 403, 'message': 'Your API key was reported as leaked. Please use another API key.', 'status': 'PERMISSION_DENIED'}}
