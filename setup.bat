@@ -19,5 +19,5 @@ call .venv\Scripts\python -m pip install -r requirements-python.txt
 
 echo.
 echo Setup complete! You can now run the server with:
-echo   .venv\Scripts\python -m uvicorn app:app --reload --port 5174
+echo   .venv\Scripts\python -m uvicorn app:app --reload --port 8000
 pause

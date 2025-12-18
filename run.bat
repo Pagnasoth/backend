@@ -23,5 +23,5 @@ echo Upgrading pip and installing requirements...
 %VENV_PY% -m pip install --upgrade pip
 %VENV_PY% -m pip install -r requirements-python.txt
 
-echo Starting FastAPI (uvicorn) on http://localhost:5174
-%VENV_PY% -m uvicorn app:app --reload --port 5174
+echo Starting FastAPI (uvicorn) on http://localhost:8000
+%VENV_PY% -m uvicorn app:app --reload --port 8000
