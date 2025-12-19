@@ -32,6 +32,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:8080",        # Local dev
         "http://localhost:5172",        # Vite dev
+        "https://frontend-sable-xi-43.vercel.app/",
         "https://*.vercel.app"],        # Any Vercel preview  # React dev servers
     allow_credentials=True,
     allow_methods=["*"],
