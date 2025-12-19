@@ -73,13 +73,6 @@ def _extract_model_from_url(url: Optional[str]):
         return None
     return None
 
-# Auto-detect model URL if not provided explicitly
-if GEMINI_API_URL is None:
-    detected = _detect_gemini_model()
-    GEMINI_API_URL = detected or 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent'
-
-app = FastAPI()
-
 
 class AnalyzeRequest(BaseModel):
     code: str
