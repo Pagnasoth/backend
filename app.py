@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import Response
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional
 import os
@@ -18,6 +19,24 @@ _GEMINI_CANDIDATE_MODELS = [
     'gemini-2.5-flash'
 ]
 
+# Auto-detect model URL if not provided explicitly
+# if GEMINI_API_URL is None:
+#     detected = _detect_gemini_model()
+#     GEMINI_API_URL = detected or 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent'
+
+app = FastAPI(title="Backend", version="1.0.0")
+
+# Enable CORS for React frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:8080",        # Local dev
+        "http://localhost:5172",        # Vite dev
+        "https://*.vercel.app"],        # Any Vercel preview  # React dev servers
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 def _detect_gemini_model():
     """Try candidate models using the API key and pick the first that the
