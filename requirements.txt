@@ -4,3 +4,6 @@ uvicorn[standard]==0.22.0
 python-dotenv==1.0.0
 requests==2.31.0
 pydantic>=2.0.0
+
+# Optional (install when using Google Gemini via the genai client):
+google-genai>=0.8.0

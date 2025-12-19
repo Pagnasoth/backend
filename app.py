@@ -323,3 +323,10 @@ def analyze(req: AnalyzeRequest):
 
     # Fallback mocked analysis
     return {'result': _build_mock_analysis("no Gemini credentials configured", req)}
+
+
+if __name__ == "__main__":
+    # Allow running the app directly for local testing: picks up $PORT when provided by hosts like Render
+    import uvicorn
+    port = int(os.environ.get('PORT', 8000))
+    uvicorn.run("app:app", host="0.0.0.0", port=port, log_level="info")
